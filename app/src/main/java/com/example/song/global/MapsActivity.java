@@ -1,16 +1,9 @@
-package com.example.song.global;
+package com.example.user.korearoad;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.Drawable;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,23 +14,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static android.R.attr.id;
 
 
 //OnMapReadyCallback
 public class MapsActivity extends FragmentActivity
-        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener/*, GoogleMap.OnMapClickListener*/ {
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +31,7 @@ public class MapsActivity extends FragmentActivity
         final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        /*mMap.setOnMapClickListener(this);*/
     }
-
-/*
-    public void onMapClick(LatLng point) {
-        Point pt = mMap.getProjection().toScreenLocation(point);
-
-        LatLng latLng = mMap.getProjection().fromScreenLocation(pt);
-        mMap.addMarker(new MarkerOptions().position(latLng).title("new Marker."));
-
-    }*/
 
     /**
      * Manipulates the map once available.
@@ -74,38 +47,10 @@ public class MapsActivity extends FragmentActivity
 
         mMap = googleMap;
 
-        /*LatLng seoul = new LatLng(37.555819, 126.969687);
-        mMap.addMarker(new MarkerOptions().position(seoul).title("Marker is Seoul."));
-
-        LatLng kazakhstan = new LatLng(48.134547, 67.975961);
-        mMap.addMarker(new MarkerOptions().position(kazakhstan).title("Marker is Kazakhstan."));
-        LatLng uzbekistan = new LatLng(41.983430, 63.662470);
-        mMap.addMarker(new MarkerOptions().position(uzbekistan).title("Marker is Uzbekistan."));
-
-        mMap.addPolyline(new PolylineOptions().add(
-                seoul,
-                new LatLng(43.119515, 131.900557),
-                new LatLng(49.193168, 138.319412),
-                new LatLng(59.354158, 123.530255),
-                new LatLng(51.671816, 85.668485),
-                kazakhstan,
-                uzbekistan
-        )
-        .width(10)
-        .color(Color.RED)
-        ); // 폴리라인 전체 지도
-
-        LatLng uzbekistan = new LatLng(39.696154, 66.990798); // 사마르칸트 공항 주소
-        mMap.addMarker(new MarkerOptions().position(uzbekistan).title("Samarkand International Airport."));
-        LatLng latLng = new LatLng(39.684296, 66.985279); // 인근 레스토랑
-        mMap.addMarker(new MarkerOptions().position(latLng).title("Grand Sultan"));
-
-        LatLng cheonan = new LatLng(36.809077, 127.146557);
-        mMap.addMarker(new MarkerOptions().position(cheonan).title("Marker is Cheonan."));*/
-
         LatLng kim_musiem = new LatLng(41.138036, 69.308668);
         mMap.addMarker(new MarkerOptions().position(kim_musiem).title("김병화 박물관")
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.museum)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.museum))
+                .snippet("김병화 박물관이란? 블라블라"));
 
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(kim_musiem, 12)); // 줌 : 숫자가 커질수록 확대
@@ -113,7 +58,13 @@ public class MapsActivity extends FragmentActivity
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker m) {
-                turnTableNavigation(m);
+                m.showInfoWindow();
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener(){
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        turnTableNavigation(marker);
+                    }
+                });
                 return true;
             }
         });
@@ -131,5 +82,9 @@ public class MapsActivity extends FragmentActivity
     @Override
     public boolean onMarkerClick(Marker m) {
         return true;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
     }
 }
