@@ -1,10 +1,9 @@
-package com.example.user.korearoad;
+package com.example.song.global;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,6 +47,7 @@ public class MapsActivity extends FragmentActivity
         mMap = googleMap;
 
         LatLng kim_musiem = new LatLng(41.138036, 69.308668);
+
         mMap.addMarker(new MarkerOptions().position(kim_musiem).title("김병화 박물관")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.museum))
                 .snippet("김병화 박물관이란? 블라블라"));
