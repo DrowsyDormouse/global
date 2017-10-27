@@ -3,6 +3,7 @@ package com.example.song.global;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static android.R.attr.id;
 
 
 //OnMapReadyCallback
@@ -90,7 +93,7 @@ public class MapsActivity extends FragmentActivity
         )
         .width(10)
         .color(Color.RED)
-        ); // 폴리라인 전체 지도*/
+        ); // 폴리라인 전체 지도
 
         LatLng uzbekistan = new LatLng(39.696154, 66.990798); // 사마르칸트 공항 주소
         mMap.addMarker(new MarkerOptions().position(uzbekistan).title("Samarkand International Airport."));
@@ -98,8 +101,14 @@ public class MapsActivity extends FragmentActivity
         mMap.addMarker(new MarkerOptions().position(latLng).title("Grand Sultan"));
 
         LatLng cheonan = new LatLng(36.809077, 127.146557);
-        mMap.addMarker(new MarkerOptions().position(cheonan).title("Marker is Cheonan."));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cheonan, 8)); // 줌 : 숫자가 커질수록 확대
+        mMap.addMarker(new MarkerOptions().position(cheonan).title("Marker is Cheonan."));*/
+
+        LatLng kim_musiem = new LatLng(41.138036, 69.308668);
+        mMap.addMarker(new MarkerOptions().position(kim_musiem).title("김병화 박물관")
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.museum)));
+
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(kim_musiem, 12)); // 줌 : 숫자가 커질수록 확대
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -121,7 +130,6 @@ public class MapsActivity extends FragmentActivity
 
     @Override
     public boolean onMarkerClick(Marker m) {
-        turnTableNavigation(m);
         return true;
     }
 }
