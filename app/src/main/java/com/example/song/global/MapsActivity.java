@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,9 +20,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 //OnMapReadyCallback
 public class MapsActivity extends FragmentActivity
-        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener, GoogleMap.InfoWindowAdapter {
 
     private GoogleMap mMap;
+    private ViewGroup infoWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +49,27 @@ public class MapsActivity extends FragmentActivity
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+        this.infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.info, null);
 
-        LatLng kim_musiem = new LatLng(41.138036, 69.308668);
+        LatLng latLng[] = new LatLng[]{new LatLng(41.138036, 69.308668) // 김병화 박물관
+                                        ,new LatLng(39.660730, 66.980343) // 비비하눔 사원
+                                        };
 
-        mMap.addMarker(new MarkerOptions().position(kim_musiem).title("김병화 박물관")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.museum))
-                .snippet("김병화 박물관이란? 블라블라"));
+        mMap.addMarker(new MarkerOptions().position(latLng[0])
+                .title("김병화 박물관")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(kim_musiem, 12)); // 줌 : 숫자가 커질수록 확대
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng[1])
+                .title("비비하눔 사원")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+        );
+        marker.showInfoWindow();
+
+
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(42.015472, 64.020226), 6)); // 줌 : 숫자가 커질수록 확대
+
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -87,4 +103,15 @@ public class MapsActivity extends FragmentActivity
     @Override
     public void onInfoWindowClick(Marker marker) {
     }
+
+    @Override
+    public View getInfoWindow(Marker marker) {
+        return null;
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        return null;
+    }
+
 }
