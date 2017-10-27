@@ -2,4 +2,7 @@
     <string name="app_name">global</string>
     <string name="title_activity_maps">Map</string>
 
+    <string name="title1">김병화 박물관</string>
+    <string name="title2">비비하눔 사원</string>
+
 </resources>

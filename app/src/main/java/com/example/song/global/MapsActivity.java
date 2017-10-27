@@ -1,6 +1,7 @@
 package com.example.song.global;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -49,42 +50,27 @@ public class MapsActivity extends FragmentActivity
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        this.infoWindow = (ViewGroup)getLayoutInflater().inflate(R.layout.info, null);
+        int id;
+        String title;
+        Resources res = getResources();
+
+
+        LatLng Uzbekiston = new LatLng(42.015472, 64.020226); // 초기 줌 포인트
 
         LatLng latLng[] = new LatLng[]{new LatLng(41.138036, 69.308668) // 김병화 박물관
                                         ,new LatLng(39.660730, 66.980343) // 비비하눔 사원
                                         };
+        mMap.addMarker(new MarkerOptions().position(latLng[0]).title(getString(R.string.title1)));
+        mMap.addMarker(new MarkerOptions().position(latLng[1]).title(getString(R.string.title2)));
 
-        mMap.addMarker(new MarkerOptions().position(latLng[0])
-                .title("김병화 박물관")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Uzbekiston, 5)); // 줌 : 숫자가 커질수록 확대
 
-
-        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng[1])
-                .title("비비하눔 사원")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-        );
-        marker.showInfoWindow();
-
-
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(42.015472, 64.020226), 6)); // 줌 : 숫자가 커질수록 확대
-
-
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener(){
             @Override
-            public boolean onMarkerClick(Marker m) {
-                m.showInfoWindow();
-                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener(){
-                    @Override
-                    public void onInfoWindowClick(Marker marker) {
-                        turnTableNavigation(marker);
-                    }
-                });
-                return true;
+            public void onInfoWindowClick(Marker marker) {
+                turnTableNavigation(marker);
             }
         });
-
     }
 
     public void turnTableNavigation(Marker m)
