@@ -47,7 +47,7 @@ public class MapsActivity extends FragmentActivity
         mMap.addMarker(new MarkerOptions().position(latLng[0]).title(getString(R.string.title1)));
         mMap.addMarker(new MarkerOptions().position(latLng[1]).title(getString(R.string.title2)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Uzbekiston, 5)); // 줌 : 숫자가 커질수록 확대
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Uzbekiston, 6)); // 줌 : 숫자가 커질수록 확대
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener(){
             @Override
