@@ -1,25 +1,28 @@
-package com.example.song.global;
+package com.example.user.korearoad;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.Serializable;
+
 
 //OnMapReadyCallback
 public class MapsActivity extends FragmentActivity
-        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
+    private Marker tmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,41 +41,47 @@ public class MapsActivity extends FragmentActivity
 
         mMap = googleMap;
 
+        LatLng latLng[] = new LatLng[] {
+                new LatLng(41.138036, 69.308668) // 김병화 박물관
+                ,new LatLng(39.660730, 66.980343) // 비비하눔 사원
+                ,new LatLng(41.489135, 69.586206) // 치르치크
+        };
 
-        LatLng Uzbekiston = new LatLng(42.015472, 64.020226); // 초기 줌 포인트
+        for (int i = 0; i < latLng.length; i++) {
+            tmp = mMap.addMarker(new MarkerOptions().position(latLng[i]));
 
-        LatLng latLng[] = new LatLng[]{new LatLng(41.138036, 69.308668) // 김병화 박물관
-                                        ,new LatLng(39.660730, 66.980343) // 비비하눔 사원
-                                        };
-        mMap.addMarker(new MarkerOptions().position(latLng[0]).title(getString(R.string.title1)));
-        mMap.addMarker(new MarkerOptions().position(latLng[1]).title(getString(R.string.title2)));
+            if (i < 10) {
+                tmp.setTag("0" + i);
+            }
+            else {
+                int j = i / 10;
+                tmp.setTag(j + (i%10));
+            }
+        }
+        
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Uzbekiston, 6)); // 줌 : 숫자가 커질수록 확대
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 6)); // 줌 : 숫자가 커질수록 확대
 
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener(){
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
-                turnTableNavigation(marker);
+            public boolean onMarkerClick(Marker marker) {
+                Intent intent = new Intent(MapsActivity.this, ContentActivity.class);
+                intent.putExtra("it_tag", marker.getTag().toString());
+
+                double i = marker.getPosition().latitude;
+                double j = marker.getPosition().longitude;
+                intent.putExtra("lat", i);
+                intent.putExtra("lon", j);
+
+                startActivity(intent);
+                return false;
             }
         });
-    }
-asdf
-    public void turnTableNavigation(Marker m)
-    {
-        Uri gmmIntentUri = Uri.parse("google.navigation:q="+m.getPosition().latitude+","+m.getPosition().longitude);
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        startActivity(mapIntent);
     }
 
     @Override
     public boolean onMarkerClick(Marker m) {
         return true;
     }
-
-    @Override
-    public void onInfoWindowClick(Marker marker) {
-    }
-
 
 }
