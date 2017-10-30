@@ -56,7 +56,7 @@ public class MapsActivity extends FragmentActivity
             }
         });
     }
-
+asdf
     public void turnTableNavigation(Marker m)
     {
         Uri gmmIntentUri = Uri.parse("google.navigation:q="+m.getPosition().latitude+","+m.getPosition().longitude);
