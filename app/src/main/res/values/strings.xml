@@ -1,8 +1,16 @@
 <resources>
-    <string name="app_name">global</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">Korea Road</string>
+    <string name="title_activity_maps">Korea Road</string>
 
-    <string name="title1">김병화 박물관</string>
-    <string name="title2">비비하눔 사원</string>
-
+    <string name="image01">kimmuseum</string>
+    <string name="text01">
+        "
+        김병화 박물관\n
+        1937년 러시아 동쪽끝에서 서쪽끝으로 강제이주 당했지만,\n
+        황무지를 개간해 식량을 지원한 노력을 인정 받아\n
+        노력영웅 훈장을 2번 받은 인물에 대한 박물관이다.\n\n
+        그는 '이 땅에서 새로운 조국을 찾았다.'라고 말했지만,\n
+        사실상 선택의 여지가 없었을 것이라 여겨진다.
+        "
+    </string>
 </resources>
