@@ -4,14 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.example.user.korearoad.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 
 //OnMapReadyCallback
@@ -39,9 +41,9 @@ public class MapsActivity extends FragmentActivity
         mMap = googleMap;
 
         LatLng latLng[] = new LatLng[] {
-                new LatLng(41.138036, 69.308668) // 김병화 박물관
-                ,new LatLng(39.660730, 66.980343) // 비비하눔 사원
-                ,new LatLng(41.489135, 69.586206) // 치르치크
+                new LatLng(41.138036, 69.308668) // 김병화 박물관 tag 01
+                ,new LatLng(39.660730, 66.980343) // 비비하눔 사원 tag 02
+                ,new LatLng(41.489135, 69.586206) // 치르치크 tag 00
         };
 
         for (int i = 0; i < latLng.length; i++) {
@@ -55,6 +57,14 @@ public class MapsActivity extends FragmentActivity
                 tmp.setTag(j + (i%10));
             }
         }
+
+
+        PolylineOptions rectOptions = new PolylineOptions()
+                .add(latLng[1])
+                .add(latLng[0])
+                .add(latLng[2]);
+        Polyline polyline = mMap.addPolyline(rectOptions);
+        polyline.setColor(0xffff0000);
         
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 6)); // 줌 : 숫자가 커질수록 확대

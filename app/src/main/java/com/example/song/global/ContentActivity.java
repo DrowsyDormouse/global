@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.user.korearoad.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -30,7 +29,6 @@ public class ContentActivity extends AppCompatActivity {
 
         TextView tv_title = (TextView)findViewById(R.id.title);
         TextView tv_text = (TextView)findViewById(R.id.text);
-        tv_text.setMovementMethod(new ScrollingMovementMethod());
         ImageView iv_image = (ImageView)findViewById(R.id.image);
 
         Intent it = getIntent();
