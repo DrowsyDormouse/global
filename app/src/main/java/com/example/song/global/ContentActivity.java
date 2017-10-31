@@ -1,4 +1,4 @@
-package com.example.user.korearoad;
+package com.example.song.global;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -6,12 +6,14 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.user.korearoad.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -26,7 +28,9 @@ public class ContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
 
+        TextView tv_title = (TextView)findViewById(R.id.title);
         TextView tv_text = (TextView)findViewById(R.id.text);
+        tv_text.setMovementMethod(new ScrollingMovementMethod());
         ImageView iv_image = (ImageView)findViewById(R.id.image);
 
         Intent it = getIntent();
@@ -43,6 +47,10 @@ public class ContentActivity extends AppCompatActivity {
         int id_img = res.getIdentifier(image, "drawable", getPackageName());
         Drawable drawable = res.getDrawable(id_img);
         iv_image.setBackground(drawable);
+
+        int id_title = res.getIdentifier("title"+tag, "string", getPackageName());
+        String title = res.getString(id_title);
+        tv_title.setText(title);
 
         int id_text = res.getIdentifier("text" + tag, "string", getPackageName());
         String text = res.getString(id_text);
