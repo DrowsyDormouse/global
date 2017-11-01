@@ -28,9 +28,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
-import static android.R.attr.tag;
-
-
 //OnMapReadyCallback
 public class MapsActivity extends FragmentActivity
         implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -40,13 +37,11 @@ public class MapsActivity extends FragmentActivity
     private GoogleMap mMap;
     private Marker tmp;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -68,8 +63,9 @@ public class MapsActivity extends FragmentActivity
         };
 
         for (int i = 0; i < latLng.length; i++) {
-            //tmp = mMap.addMarker(new MarkerOptions().position(latLng[i]));
+
             int id_title;
+
             if (i < 10) {
                 id_title = res.getIdentifier("title0"+i, "string", getPackageName());
                 String title = res.getString(id_title);
@@ -88,16 +84,14 @@ public class MapsActivity extends FragmentActivity
             }
         }
 
-
         PolylineOptions rectOptions = new PolylineOptions()
                 .add(latLng[1])
                 .add(latLng[0])
                 .add(latLng[2]);
         Polyline polyline = mMap.addPolyline(rectOptions);
         polyline.setColor(0xffff0000);
-        
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 6)); // 줌 : 숫자가 커질수록 확대
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 7)); // 줌 : 숫자가 커질수록 확대
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -121,22 +115,6 @@ public class MapsActivity extends FragmentActivity
         return true;
     }
 
-    /*private void getSampleMarkerItems() {
-        ArrayList<MarkerItem> sampleList = new ArrayList();
-
-
-        sampleList.add(new MarkerItem(37.538523, 126.96568, 2500000));
-        sampleList.add(new MarkerItem(37.527523, 126.96568, 100000));
-        sampleList.add(new MarkerItem(37.549523, 126.96568, 15000));
-        sampleList.add(new MarkerItem(37.538523, 126.95768, 5000));
-
-
-        for (MarkerItem markerItem : sampleList) {
-            addMarker(markerItem, false);
-        }
-
-    }*/
-
     private void setCustomMarkerView() {
 
         marker_root_view = LayoutInflater.from(this).inflate(R.layout.marker_layout, null);
@@ -146,25 +124,18 @@ public class MapsActivity extends FragmentActivity
 
     private Marker addMarker(MarkerItem markerItem) {
 
-
         LatLng position = markerItem.getLatLng();
         String title = markerItem.getName();
 
         tv_marker.setText(title);
-
-
         tv_marker.setBackgroundResource(R.drawable.ic_marker_phone);
         tv_marker.setTextColor(Color.BLACK);
 
-
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.title(title);
         markerOptions.position(position);
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, marker_root_view)));
 
-
         return mMap.addMarker(markerOptions);
-
     }
 
     // View를 Bitmap으로 변환
@@ -183,6 +154,4 @@ public class MapsActivity extends FragmentActivity
 
         return bitmap;
     }
-
-
 }
