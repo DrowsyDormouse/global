@@ -91,7 +91,7 @@ public class MapsActivity extends FragmentActivity
         Polyline polyline = mMap.addPolyline(rectOptions);
         polyline.setColor(0xffff0000);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 7)); // 줌 : 숫자가 커질수록 확대
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 8)); // 줌 : 숫자가 커질수록 확대
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
