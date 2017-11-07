@@ -128,9 +128,18 @@
         이 곳에서 대다수 살고 있던 고려인들이 스탈린의 강제이주 정책으로 인해서 시베리아 횡단 열차에 실어졌다.
     </string>
 
-    <string name="image13">bibihanum</string>
-    <string name="title13">비비하눔 사원</string>
+    <string name="image13">chirchiq</string>
+    <string name="title13">치르치크</string>
     <string name="text13">
+        \n
+        치르치크(우즈베크어: Chirchiq)는 우즈베키스탄 타슈켄트 주의 도시로 인구는
+        145,600명(1999년 기준)이다. \n
+        타슈켄트에서 북동쪽으로 약 32km 정도 떨어진 곳에 위치한다.\n
+    </string>
+
+    <string name="image14">bibihanum</string>
+    <string name="title14">비비하눔 사원</string>
+    <string name="text14">
         \n
         비비하눔 사원(Bibi-Xonum machiti)은 14세기 티무르 제국의 통치자였던
         아미르 티무르의 아내 이름을 딴 모스크로서 우즈베키스탄의 사마르칸트에 위치해 있다.\n\n
@@ -150,9 +159,9 @@
         상당 부분이 파괴된 정도까지 이른 것은 아니다.\n
     </string>
 
-    <string name="image14">kimmuseum</string>
-    <string name="title14">김병화 박물관</string>
-    <string name="text14">
+    <string name="image15">kimmuseum</string>
+    <string name="title15">김병화 박물관</string>
+    <string name="text15">
         \n
         북극성 콜호즈(집단농장)의 지도자이자 사회주의 노력영웅을 두 번 받은
         김병화를 기리기 위한 박물관이다.\n\n
@@ -161,12 +170,4 @@
         사용했던 농기구 등이 전시되어 있다.\n
     </string>
 
-    <string name="image15">chirchiq</string>
-    <string name="title15">치르치크</string>
-    <string name="text15">
-        \n
-        치르치크(우즈베크어: Chirchiq)는 우즈베키스탄 타슈켄트 주의 도시로 인구는
-        145,600명(1999년 기준)이다. \n
-        타슈켄트에서 북동쪽으로 약 32km 정도 떨어진 곳에 위치한다.\n
-    </string>
 </resources>

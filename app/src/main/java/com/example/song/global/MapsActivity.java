@@ -14,11 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -28,11 +30,11 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
+import static android.R.attr.max;
+
 //OnMapReadyCallback
 public class MapsActivity extends FragmentActivity
-        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-    View marker_root_view;
-    TextView tv_marker;
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
     private Marker tmp;
@@ -51,12 +53,11 @@ public class MapsActivity extends FragmentActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        setCustomMarkerView();
         mMap = googleMap;
-        ArrayList<MarkerItem> markerList = new ArrayList();
         Resources res = getResources();
+        int i = 0;
 
-        LatLng latLng[] = new LatLng[] {
+        LatLng latLngMT[] = new LatLng[] {
                 new LatLng(53.242399, 50.218703) // 사마라 0
                 ,new LatLng(41.300570, 69.240908) // 타슈켄트 1
                 ,new LatLng(43.232465, 76.845968) // 알마티 2
@@ -73,58 +74,94 @@ public class MapsActivity extends FragmentActivity
                 ,new LatLng(43.801456, 131.965403) // 우수리스크 11
                 ,new LatLng(43.124270, 131.917708) // 블라디보스토크 12
 
-                ,new LatLng(39.660730, 66.980343) // 비비하눔 사원 tag 13
-                ,new LatLng(41.138036, 69.308668) // 김병화 박물관 tag 14
-                ,new LatLng(41.489135, 69.586206) // 치르치크 tag 15
+                ,new LatLng(41.489135, 69.586206) // 치르치크 tag 13
         };
         LatLng amur = new LatLng(53.962738, 123.769936);
         LatLng oblu = new LatLng(49.102856, 131.108803);
 
-        for (int i = 0; i < latLng.length; i++) {
+        LatLng latLngTD[] = new LatLng[] {
+                new LatLng(41.138036, 69.308668) // 김병화 박물관 tag 15
+                ,new LatLng(39.660730, 66.980343) // 비비하눔 사원 tag 14
+        };
 
+        int max = latLngMT.length+latLngTD.length;
+
+        for (i = 0; i < max; i++) {
             int id_title;
 
-            if (i < 10) {
-                id_title = res.getIdentifier("title0"+i, "string", getPackageName());
-                String title = res.getString(id_title);
-                markerList.add(new MarkerItem(latLng[i], title));
-                tmp = addMarker(markerList.get(i));
-                tmp.setTag("0" + i);
-            }
-            else {
-                int j = i / 10;
-                id_title = res.getIdentifier("title"+j+(i%10), "string", getPackageName());
-                String title = res.getString(id_title);
-                markerList.add(new MarkerItem(latLng[i], title));
-                tmp = addMarker(markerList.get(i));
-                tmp.setTag(j + (i%10));
-
+            if(i < latLngMT.length) {
+                if (i < 10) {
+                    id_title = res.getIdentifier("title0" + i, "string", getPackageName());
+                    String title = res.getString(id_title);
+                    tmp = mMap.addMarker(new MarkerOptions().position(latLngMT[i]).title(title)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                    tmp.setTag("0" + i);
+                } else {
+                    int j = i / 10;
+                    id_title = res.getIdentifier("title" + j + (i % 10), "string", getPackageName());
+                    String title = res.getString(id_title);
+                    tmp = mMap.addMarker(new MarkerOptions().position(latLngMT[i]).title(title)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                    tmp.setTag(j + (i % 10));
+                }
+            }else {
+                if (i < 10) {
+                    id_title = res.getIdentifier("title0" + i, "string", getPackageName());
+                    String title = res.getString(id_title);
+                    tmp = mMap.addMarker(new MarkerOptions().position(latLngTD[i-latLngMT.length])
+                            .title(title).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                    tmp.setTag("0" + i);
+                } else {
+                    int j = i / 10;
+                    id_title = res.getIdentifier("title" + j + (i % 10), "string", getPackageName());
+                    String title = res.getString(id_title);
+                    tmp = mMap.addMarker(new MarkerOptions().position(latLngTD[i-latLngMT.length])
+                            .title(title).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                    tmp.setTag(j + (i % 10));
+                }
             }
         }
 
+
         PolylineOptions rectOptions = new PolylineOptions()
-                .add(latLng[0])
-                .add(latLng[4])
-                .add(latLng[1])
-                .add(latLng[15])
-                .add(latLng[5])
-                .add(latLng[2])
-                .add(latLng[3])
-                .add(latLng[6])
-                .add(latLng[7])
-                .add(latLng[8])
-                .add(latLng[9])
+                .add(latLngMT[0])
+                .add(latLngMT[4])
+                .add(latLngMT[1])
+                .add(latLngMT[13])
+                .add(latLngMT[5])
+                .add(latLngMT[2])
+                .add(latLngMT[3])
+                .add(latLngMT[6])
+                .add(latLngMT[7])
+                .add(latLngMT[8])
+                .add(latLngMT[9])
                 .add(amur)
                 .add(oblu)
-                .add(latLng[10])
-                .add(latLng[11])
-                .add(latLng[12]);
+                .add(latLngMT[10])
+                .add(latLngMT[11])
+                .add(latLngMT[12]);
         Polyline polyline = mMap.addPolyline(rectOptions);
         polyline.setColor(0xffff0000);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 10)); // 줌 : 숫자가 커질수록 확대
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngMT[5], 8)); // 줌 : 숫자가 커질수록 확대
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(MapsActivity.this, ContentActivity.class);
+                intent.putExtra("it_tag", marker.getTag().toString());
+
+                double i = marker.getPosition().latitude;
+                double j = marker.getPosition().longitude;
+                intent.putExtra("lat", i);
+                intent.putExtra("lon", j);
+
+                startActivity(intent);
+            }
+        });
+
+        /*mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Intent intent = new Intent(MapsActivity.this, ContentActivity.class);
@@ -138,7 +175,7 @@ public class MapsActivity extends FragmentActivity
                 startActivity(intent);
                 return false;
             }
-        });
+        });*/
     }
 
     @Override
@@ -146,43 +183,53 @@ public class MapsActivity extends FragmentActivity
         return true;
     }
 
-    private void setCustomMarkerView() {
-
-        marker_root_view = LayoutInflater.from(this).inflate(R.layout.marker_layout, null);
-        tv_marker = (TextView)marker_root_view.findViewById(R.id.tv_marker);
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, "Info window clicked",
+                Toast.LENGTH_SHORT).show();
     }
 
+    public void addMarker(LatLng[] latLngs, int i){
 
-    private Marker addMarker(MarkerItem markerItem) {
+        Resources res = getResources();
+        int max = latLngs.length+i;
 
-        LatLng position = markerItem.getLatLng();
-        String title = markerItem.getName();
+        for (; i < max; i++) {
 
-        tv_marker.setText(title);
-        tv_marker.setBackgroundResource(R.drawable.ic_marker_phone);
-        tv_marker.setTextColor(Color.BLACK);
+            int id_title;
 
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(position);
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this, marker_root_view)));
+            if (i < 10) {
+                id_title = res.getIdentifier("title0"+i, "string", getPackageName());
+                String title = res.getString(id_title);
+                if(latLngs.length < i) {
+                    mMap.addMarker(new MarkerOptions().position(latLngs[i])
+                            .title(title)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                }
+                else {
+                    mMap.addMarker(new MarkerOptions().position(latLngs[i])
+                            .title(title)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                }
+                tmp.setTag("0" + i);
+            }
+            else {
+                int j = i / 10;
+                id_title = res.getIdentifier("title"+j+(i%10), "string", getPackageName());
+                String title = res.getString(id_title);
+                if(latLngs.length < i) {
+                    mMap.addMarker(new MarkerOptions().position(latLngs[i])
+                            .title(title)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                }
+                else {
+                    mMap.addMarker(new MarkerOptions().position(latLngs[i])
+                            .title(title)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                }
+                tmp.setTag(j + (i%10));
 
-        return mMap.addMarker(markerOptions);
-    }
-
-    // View를 Bitmap으로 변환
-    private Bitmap createDrawableFromView(Context context, View view) {
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
-        view.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
-        view.buildDrawingCache();
-        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(bitmap);
-        view.draw(canvas);
-
-        return bitmap;
+            }
+        }
     }
 }
