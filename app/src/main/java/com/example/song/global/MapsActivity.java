@@ -82,6 +82,15 @@ public class MapsActivity extends FragmentActivity
         LatLng latLngTD[] = new LatLng[] {
                 new LatLng(41.138036, 69.308668) // 김병화 박물관 tag 15
                 ,new LatLng(39.660730, 66.980343) // 비비하눔 사원 tag 14
+                ,new LatLng(41.345735, 69.284616) // 텔레미노라 tag 16
+                ,new LatLng(41.197081, 69.158166) // 장기오타 묘소 tag 17
+                ,new LatLng(41.347771, 69.288167) // 희생자 추모공원 tag 18
+                ,new LatLng(41.304003, 69.241195) // 알리쉐르 tag 19
+                ,new LatLng(41.315426, 69.266605) // 무스타킬릭 tag 20
+                ,new LatLng(39.669483, 66.993320) // 아프로시압 박물관 tag 21
+                ,new LatLng(39.813951, 64.441251) // 시토라이 모히호사 궁전 tag 22
+                ,new LatLng(39.774715, 64.427452) // 초르-미노르 tag 23
+
         };
 
         int max = latLngMT.length+latLngTD.length;
@@ -141,9 +150,9 @@ public class MapsActivity extends FragmentActivity
                 .add(latLngMT[11])
                 .add(latLngMT[12]);
         Polyline polyline = mMap.addPolyline(rectOptions);
-        polyline.setColor(0xffff0000);
+        polyline.setColor(Color.RED);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngMT[5], 8)); // 줌 : 숫자가 커질수록 확대
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngMT[1], 5)); // 줌 : 숫자가 커질수록 확대
 
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -166,12 +175,10 @@ public class MapsActivity extends FragmentActivity
             public boolean onMarkerClick(Marker marker) {
                 Intent intent = new Intent(MapsActivity.this, ContentActivity.class);
                 intent.putExtra("it_tag", marker.getTag().toString());
-
                 double i = marker.getPosition().latitude;
                 double j = marker.getPosition().longitude;
                 intent.putExtra("lat", i);
                 intent.putExtra("lon", j);
-
                 startActivity(intent);
                 return false;
             }
