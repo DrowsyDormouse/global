@@ -94,30 +94,30 @@ public class MapsActivity extends FragmentActivity
                     id_title = res.getIdentifier("title0" + i, "string", getPackageName());
                     String title = res.getString(id_title);
                     tmp = mMap.addMarker(new MarkerOptions().position(latLngMT[i]).title(title)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                     tmp.setTag("0" + i);
                 } else {
                     int j = i / 10;
                     id_title = res.getIdentifier("title" + j + (i % 10), "string", getPackageName());
                     String title = res.getString(id_title);
                     tmp = mMap.addMarker(new MarkerOptions().position(latLngMT[i]).title(title)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-                    tmp.setTag(j + (i % 10));
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                    tmp.setTag(i);
                 }
             }else {
                 if (i < 10) {
                     id_title = res.getIdentifier("title0" + i, "string", getPackageName());
                     String title = res.getString(id_title);
                     tmp = mMap.addMarker(new MarkerOptions().position(latLngTD[i-latLngMT.length])
-                            .title(title).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                            .title(title).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     tmp.setTag("0" + i);
                 } else {
                     int j = i / 10;
                     id_title = res.getIdentifier("title" + j + (i % 10), "string", getPackageName());
                     String title = res.getString(id_title);
                     tmp = mMap.addMarker(new MarkerOptions().position(latLngTD[i-latLngMT.length])
-                            .title(title).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-                    tmp.setTag(j + (i % 10));
+                            .title(title).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    tmp.setTag(i);
                 }
             }
         }
